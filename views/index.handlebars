@@ -1,0 +1,177 @@
+<div id="burger-img-container">
+  <img id="burger-img" src="/assets/images/burger.png">
+</div>
+
+<header>
+  <h1>Burgers to Eat</h1>
+</header>
+
+<div class="container">
+
+  <div id="burgers">
+
+    <section id="to-eat">
+
+      <h2>Some Tasty-Looking Burgers</h2>
+
+      <ol>
+        {{#each burgers}}
+          {{#unless devoured}}
+            <div class="list-row">
+              <li class="burger-name">
+                {{burger_name}}
+              </li>
+              <div class="buttons">
+                <button class="eat" data-id="{{id}}">
+                  <i class="fas fa-hamburger"></i> BURGER TIME!
+                </button>
+                <button class="delete" data-id="{{this.id}}">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          {{/unless}}
+        {{/each}}
+      </ol>
+
+    </section>
+
+    <section id="eaten">
+
+      <h2>Burgers Devoured</h2>
+
+      <ol>
+        {{#each burgers}}
+          {{#if devoured}}
+            <div class="list-row">
+              <li class="burger-name">
+                {{burger_name}} ( Yummy! <i class="far fa-grin-hearts"></i> )
+              </li>
+              <div class="buttons">
+                <button class="delete" data-id="{{this.id}}">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          {{/if}}
+        {{/each}}
+      </ol>
+
+    </section>
+
+  </div>
+
+  <div id="add-burger">
+    <div id="add-burger-content">
+
+      <h2>Add a Burger</h2>
+
+      <form class="create-burger">
+
+        <div class="form-group">
+          <label for="burger">Burger Name:</label>
+          <input type="text" id="burger_name" name="burger_name">
+        </div>
+
+        <button id="add" type="submit">
+          ADD <i class="fas fa-hamburger"></i>
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+
+  <div id="gif-display">
+    <img id="gif">
+  </div>
+
+</div>
+
+<script type="text/javascript">
+
+  // Make sure we wait to attach our handlers until the DOM is fully loaded.
+  $(function() {
+
+    $(".eat").on("click", function(event) {
+      let id = $(this).data("id");
+      // Send the PUT request.
+      $.ajax("/api/burgers/" + id, {
+        type: "PUT",
+        data: {devoured: true}
+      }).then(
+        function() {
+          let eatGIFs = [
+          "https://media.giphy.com/media/HQ2Slp9yEkX72/giphy.gif",
+          "https://media.giphy.com/media/IgOEWPOgK6uVa/giphy.gif",
+          "https://media.giphy.com/media/WOvuL1zmfwPEk/giphy.gif",
+          "https://media.giphy.com/media/3ohs4h1Dt995D5iGA0/giphy.gif",
+          "https://i.imgur.com/sbDB7.gif",
+          "http://38.media.tumblr.com/tumblr_lml1dqeMSE1qzoxyvo1_500.gif",
+          "http://29.media.tumblr.com/tumblr_lfrgkiDWOK1qelg97o1_500.gif",
+          "https://lunaparknyc.com/app/uploads/2018/05/White-Castle-Gif.gif",
+          "https://media0.giphy.com/media/5cCS46mBHM2Zy/giphy.gif"
+          ];
+          let gif = eatGIFs[Math.floor(Math.random() * eatGIFs.length)];
+          $("#gif").attr("src", gif);
+          $("#gif").attr("style", "border: 2px inset tomato");
+          // Reload the page to get the updated list after displaying the GIF for five seconds.
+          setTimeout(function() {
+            location.reload();
+          }, 5000);
+        }
+      );
+    });
+
+    $(".create-burger").on("submit", function(event) {
+      // Make sure to preventDefault on a submit event.
+      event.preventDefault();
+
+      let newBurger = {
+        burger_name: $("#burger_name").val().trim(),
+        devoured: false
+      };
+
+      // Send the POST request.
+      $.ajax("/api/burgers", {
+        type: "POST",
+        data: newBurger
+      }).then(
+        function() {
+          let burgerGIFs = [
+          "https://media.giphy.com/media/3ohjUObkKl8CyTFYf6/giphy.gif",
+          "https://thumbs.gfycat.com/AcclaimedDependableAssassinbug-max-1mb.gif",
+          "https://media0.giphy.com/media/A2wMmQ8LKmF0c/giphy.gif",
+          "https://media.giphy.com/media/l4FBcFKT97V1ODRf2/giphy.gif",
+          "https://media.giphy.com/media/kvQIsNajOHc5O/giphy.gif",
+          "https://media1.tenor.com/images/5d5fafd52ca4e8610fdfbeb2c53e825e/tenor.gif?itemid=3532121",
+          "https://media.giphy.com/media/3ofSBq65voKZJKrnZS/giphy.gif",
+          "https://aht.seriouseats.com/images/2011/08/20110824-pusheen-burger.gif"
+          ];
+          let gif = burgerGIFs[Math.floor(Math.random() * burgerGIFs.length)];
+          $("#gif").attr("src", gif);
+          $("#gif").attr("style", "border: 2px inset tomato");
+          // Reload the page to get the updated list after displaying the GIF for 1.5 seconds.
+          setTimeout(function() {
+            location.reload();
+          }, 1500);
+        }
+      );
+    });
+
+    $(".delete").on("click", function(event) {
+      let id = $(this).data("id");
+      // Send the DELETE request.
+      $.ajax("/api/burgers/" + id, {
+        type: "DELETE"
+      }).then(
+        function() {
+          // Reload the page to get the updated list
+          location.reload();
+        }
+      );
+    });
+
+  });
+
+</script>

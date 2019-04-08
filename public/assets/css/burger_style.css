@@ -1,0 +1,113 @@
+body {
+    background: url(../images/sesame-seeds.jpg);
+}
+
+#gif-display {
+    display: flex;
+    justify-content: center;
+
+}
+
+#burger-img-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 21.44px;
+}
+
+#burger-img {
+    width: 20%;
+    height: 0%;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+}
+
+h1 {
+    background-color: wheat;
+    width: fit-content;
+    padding: 10px;
+    border: 2px inset tomato;
+    text-align: center;
+}
+
+#burgers {
+    display: flex;
+    justify-content: center;
+}
+
+#to-eat {
+    background-color: wheat;
+    width: 40%;
+    border: 2px inset tomato;
+    margin-right: 0.5%;
+}
+
+#eaten {
+    background-color: wheat;
+    width: 40%;
+    border: 2px inset tomato;
+    margin-left: 0.5%;
+}
+
+h2 {
+    text-align: center;
+    padding: 10px;
+    margin: 0;
+}
+
+.list-row {
+    display: flex;
+    position: relative;
+    margin-top: 10px;
+}
+
+.burger-name {
+    width: fit-content;
+}
+
+.buttons {
+    position: absolute;
+    right: 12px;
+}
+
+.eat {
+    background-color: antiquewhite;
+    border-color: tomato;
+    margin-right: 10px;
+}
+
+.delete {
+    background-color: antiquewhite;
+    border-color: tomato;
+}
+
+#add-burger {
+    display: flex;
+    justify-content: center;
+}
+
+#add-burger-content {
+    background-color: wheat;
+    width: fit-content;
+    border: 2px inset tomato;
+    padding: 0 10px 10px 10px;
+    margin: 21.44px 0 21.44px 0;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+}
+
+input {
+    background-color: wheat;
+    border: 2px solid tomato;
+}
+
+#add {
+    background-color: antiquewhite;
+    border-color: tomato;
+    margin-left: 10px;
+}
