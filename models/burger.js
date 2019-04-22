@@ -9,5 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false
     }
   });
+
+  Burger.associate = function(models) {
+    Burger.belongsTo(models.Customer);
+  };
+
   return Burger;
 };
