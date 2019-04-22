@@ -22,6 +22,8 @@
                 {{burger_name}}
               </li>
               <div class="buttons">
+                <label for="customer">Customer Name:</label>
+                <input type="text" id="{{id}}_customer_name" name="customer_name">
                 <button class="eat" data-id="{{id}}">
                   <i class="fas fa-hamburger"></i> BURGER TIME!
                 </button>
@@ -48,6 +50,9 @@
                 {{burger_name}} ( Yummy! <i class="far fa-grin-hearts"></i> )
               </li>
               <div class="buttons">
+                <label class="customer-message">
+                  Eaten by {{Customer.customer_name}}
+                </label>
                 <button class="delete" data-id="{{this.id}}">
                   <i class="fas fa-trash"></i>
                 </button>
@@ -94,33 +99,45 @@
   $(function() {
 
     $(".eat").on("click", function(event) {
-      let id = $(this).data("id");
-      // Send the PUT request.
-      $.ajax("/api/burgers/" + id, {
-        type: "PUT",
-        data: {devoured: true}
-      }).then(
-        function() {
-          let eatGIFs = [
-          "https://media.giphy.com/media/HQ2Slp9yEkX72/giphy.gif",
-          "https://media.giphy.com/media/IgOEWPOgK6uVa/giphy.gif",
-          "https://media.giphy.com/media/WOvuL1zmfwPEk/giphy.gif",
-          "https://media.giphy.com/media/3ohs4h1Dt995D5iGA0/giphy.gif",
-          "https://i.imgur.com/sbDB7.gif",
-          "http://38.media.tumblr.com/tumblr_lml1dqeMSE1qzoxyvo1_500.gif",
-          "http://29.media.tumblr.com/tumblr_lfrgkiDWOK1qelg97o1_500.gif",
-          "https://lunaparknyc.com/app/uploads/2018/05/White-Castle-Gif.gif",
-          "https://media0.giphy.com/media/5cCS46mBHM2Zy/giphy.gif"
-          ];
-          let gif = eatGIFs[Math.floor(Math.random() * eatGIFs.length)];
-          $("#gif").attr("src", gif);
-          $("#gif").attr("style", "border: 2px inset tomato");
-          // Reload the page to get the updated list after displaying the GIF for five seconds.
-          setTimeout(function() {
-            location.reload();
-          }, 5000);
-        }
-      );
+      const id = $(this).data("id");
+      const customerName = $(`#${id}_customer_name`).val().trim();
+      if (customerName) {
+        // Send the customer POST request.
+        $.ajax("/api/customers/" + customerName, {
+          type: "POST"
+        }).then(
+          function(data) {
+            // Send the burger PUT request.
+            $.ajax("/api/burgers/" + id, {
+              type: "PUT",
+              data: {customer_name: data.customer_name}
+            }).then(
+              function() {
+                let eatGIFs = [
+                "https://media.giphy.com/media/HQ2Slp9yEkX72/giphy.gif",
+                "https://media.giphy.com/media/IgOEWPOgK6uVa/giphy.gif",
+                "https://media.giphy.com/media/WOvuL1zmfwPEk/giphy.gif",
+                "https://media.giphy.com/media/3ohs4h1Dt995D5iGA0/giphy.gif",
+                "https://i.imgur.com/sbDB7.gif",
+                "http://38.media.tumblr.com/tumblr_lml1dqeMSE1qzoxyvo1_500.gif",
+                "http://29.media.tumblr.com/tumblr_lfrgkiDWOK1qelg97o1_500.gif",
+                "https://lunaparknyc.com/app/uploads/2018/05/White-Castle-Gif.gif",
+                "https://media0.giphy.com/media/5cCS46mBHM2Zy/giphy.gif"
+                ];
+                let gif = eatGIFs[Math.floor(Math.random() * eatGIFs.length)];
+                $("#gif").attr("src", gif);
+                $("#gif").attr("style", "border: 2px inset tomato");
+                // Reload the page to get the updated list after displaying the GIF for five seconds.
+                setTimeout(function() {
+                  location.reload();
+                }, 5000);
+              }
+            );
+          }
+        );
+      } else {
+        alert("Please enter your name (or customer alias).");
+      }
     });
 
     $(".create-burger").on("submit", function(event) {

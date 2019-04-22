@@ -58,8 +58,6 @@ h2 {
 }
 
 .list-row {
-    display: flex;
-    position: relative;
     margin-top: 10px;
 }
 
@@ -68,8 +66,12 @@ h2 {
 }
 
 .buttons {
-    position: absolute;
     right: 12px;
+}
+
+input {
+    background-color: wheat;
+    border: 2px solid tomato;
 }
 
 .eat {
@@ -81,6 +83,10 @@ h2 {
 .delete {
     background-color: antiquewhite;
     border-color: tomato;
+}
+
+.customer-message {
+    margin-right: 10px;
 }
 
 #add-burger {
@@ -99,11 +105,6 @@ h2 {
 form {
     display: flex;
     justify-content: center;
-}
-
-input {
-    background-color: wheat;
-    border: 2px solid tomato;
 }
 
 #add {
