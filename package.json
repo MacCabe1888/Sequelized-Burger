@@ -1,5 +1,5 @@
 {
-  "name": "Burgers-to-Eat",
+  "name": "Sequelized-Burger",
   "version": "1.0.0",
   "description": "A burger logger created with MySQL, Node.js, Express, and Handlebars.",
   "main": "server.js",
@@ -8,19 +8,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MacCabe1888/Burgers-to-Eat.git"
+    "url": "git+https://github.com/MacCabe1888/Sequelized-Burger.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MacCabe1888/Burgers-to-Eat/issues"
+    "url": "https://github.com/MacCabe1888/Sequelized-Burger/issues"
   },
-  "homepage": "https://github.com/MacCabe1888/Burgers-to-Eat#readme",
+  "homepage": "https://github.com/MacCabe1888/Sequelized-Burger#readme",
   "dependencies": {
     "express": "^4.16.4",
     "express-handlebars": "^3.0.2",
     "mysql": "^2.16.0",
-    "sequelize": "^5.2.12"
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.7.1"
   }
 }
