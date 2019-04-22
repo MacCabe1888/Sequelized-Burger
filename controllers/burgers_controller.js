@@ -2,13 +2,13 @@ const express = require("express");
 
 const router = express.Router();
 
-// Import the model (burger.js) to use its database functions.
-const burger = require("../models/burger");
+// Import the model to use its database functions.
+const db = require("../models");
 
 // Create all our routes and set up logic within those routes where required.
 
 router.get("/", function(req, res) {
-  burger.all(function(data) {
+  db.Burger.findAll().then(function(data) {
     let hbsObject = {
       burgers: data
     };
@@ -17,22 +17,29 @@ router.get("/", function(req, res) {
 });
 
 router.get("/api/burgers", function(req, res) {
-  burger.all(function(data) {
+  db.Burger.findAll().then(function(data) {
     res.json(data);
   });
 });
 
 router.post("/api/burgers", function(req, res) {
-  burger.create("burger_name", req.body.burger_name, function(result) {
-    // Send back the ID of the new burger
-    res.json({id: result.insertId});
+  db.Burger.create({
+    burger_name: req.body.burger_name
+  }).then(function(data) {
+    res.json(data);
   });
 });
 
 router.put("/api/burgers/:id", function(req, res) {
-  burger.update({devoured: true}, {id: req.params.id}, function(result) {
-    if (result.changedRows == 0) {
-      // If no rows were changed, then the ID must not exist, so 404
+  db.Burger.update({
+    devoured: true
+  }, {
+    where: {
+      id: req.params.id
+    }
+  }).then(function(data) {
+    if (data.changedRows == 0) {
+      // If no rows were changed, then the ID must not exist, so 404.
       return res.status(404).end();
     } else {
       res.status(200).end();
@@ -41,9 +48,13 @@ router.put("/api/burgers/:id", function(req, res) {
 });
 
 router.delete("/api/burgers/:id", function(req, res) {
-  burger.delete({id: req.params.id}, function(result) {
-    if (result.affectedRows == 0) {
-      // If no rows were affected, then the ID must not exist, so 404
+  db.Burger.destroy({
+    where: {
+      id: req.params.id
+    }
+  }).then(function(data) {
+    if (data.affectedRows == 0) {
+      // If no rows were affected, then the ID must not exist, so 404.
       return res.status(404).end();
     } else {
       res.status(200).end();
